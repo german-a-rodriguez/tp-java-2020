@@ -1,0 +1,23 @@
+===========================================================================================================================================================================================
+
+• CÓDIGO Y NOMBRE DEL CASO DE USO: CUU  02 – Registrar compra
+
+• META DEL CU: Realizar una compra en el sistema.
+• ACTOR PRIMARIO: Cliente.
+• DISPARADOR: Cliente añade producto al carrito de compras.
+• CAMINO BÁSICO
+	1 - Cliente elige y agrega producto al carrito de compras.
+	2 - Cliente ingresa cantidad a comprar para el producto añadido al carrito.
+	3 - Cliente completa formulario de compra.
+• CAMINOS ALTERNATIVOS
+	1.a - Cliente filtra productos por categoría.
+	1.b - Cliente elimina producto del carrito.
+
+===========================================================================================================================================================================================
+
+
+
+
+
+
+

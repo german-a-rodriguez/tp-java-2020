@@ -1,0 +1,153 @@
+============================================================================================================================================================================================
+index.jsp
+============================================================================================================================================================================================
+
+		<div class="main-contenido-principal">
+			
+			<%if(categorias!=null) {%>
+				<div class="main-div-filtro-categoria">
+					<form name="formFiltrarPorCategoria" method="post" action="consultaProductosServlet">
+						
+						<div class="filtro-titulo">
+							<label>Categorias</label>
+						</div>
+						
+						<div class="filtro-opciones">
+							<ul>
+								<li><input type="radio" name="filtroCategoria" value="sinFiltro" <%if(filtroCategoria.equals("sinFiltro")) {%>checked<%}%>><label>Sin filtro</label></li>
+								<%for(Categoria unaCategoria: categorias) {%>
+									<li><input type="radio" name="filtroCategoria" value="<%=unaCategoria.getId()%>" <%if(String.valueOf(unaCategoria.getId()).equals(filtroCategoria)) {%>checked<%}%>><label><%=unaCategoria.getNombre()%></label></li>
+								<%}%>
+							</ul>
+						</div>
+						
+						<div class="filtro-boton">
+							<input class="boton" type="submit" value="Filtrar">
+						</div>
+						
+					</form>
+				</div>
+			<%}%>
+			
+
+			<%if(productos!=null) {/*1*/%>
+				<div class="main-div-listado-productos">
+					
+					<%for(Producto p: productos) {/*2*/%>
+						<div class="main-div-div-un-producto">
+							
+							<div class="main-div-div-div-producto-img">
+								<img src="<%if(p.getLinkFoto().equals("sinImagen.jpg")) {%>
+											<%="images/app/sinImagen.jpg"%>
+										  <%} else {%>
+										  	<%="images/productos/"+p.getLinkFoto()%>
+										  <%}%>"
+									 width="100" height="100" alt="producto informático">
+							</div>
+							
+							<div class="main-div-div-div-producto-info">
+								<p><%=p.getDescripcion()%></p>
+								<p><%=p.getCategoria().getNombre()%></p>
+								<p>$ <%=p.getPrecio()%> ARS</p>
+								
+								<%if(p.getStock() == 0) {%>
+									<p>Por el momento no hay stock</p>
+								<%} else if(p.getStock() <= 3) {%>
+									<p>Poco stock: <%=p.getStock()%> unidades</p>
+								<%} else if(p.getStock() > 3) {%>
+									<p>Hay stock: <%=p.getStock()%> unidades</p>
+								<%}%>
+							</div>
+							
+							<div class="main-div-div-div-producto-agregar-eliminar">
+								<%if(p.getStock()!=0) {/*3*/%>
+									<%if(usuario==null) {/*4*/%>
+										
+										<a class="boton" href="carritoServlet?hiddenOperacion=agregar&hiddenId=<%=p.getId()%>">Agregar al carrito</a>
+										
+									<%} else {/*4*/
+										
+										boolean productoEstaEnElCarrito = false;
+										for(ProductoEnCompra pec : carritoProductos) {
+											if( p.getId() == pec.getProducto().getId() ) {
+												productoEstaEnElCarrito = true;
+											}
+										}
+										
+										if(productoEstaEnElCarrito == false) {%>
+											
+											<a class="boton" href="carritoServlet?hiddenOperacion=agregar&hiddenId=<%=p.getId()%>">Agregar al carrito</a>
+											
+										<%} else {%>
+											
+											<a class="boton boton-eliminar-color" href="carritoServlet?hiddenOperacion=eliminar&hiddenId=<%=p.getId()%>">Eliminar del carrito</a>
+											
+										<%}%>
+										
+									<%}/*4*/%>
+								<%} else {/*3*/%>
+									<br>
+								<%}/*3*/%>
+							</div>
+							
+						</div>
+					<%}/*2*/%>
+					
+				</div>
+			<%}/*1*/%>
+			
+		</div>
+
+============================================================================================================================================================================================
+CarritoServlet
+============================================================================================================================================================================================
+
+			if(usuario.getRol().equals("cliente")) {
+				
+				String operacion = request.getParameter("hiddenOperacion");
+				if(operacion!=null) {
+					
+					//Evalua a que pagina tiene que volver al salir. Esto pasa porque se puede agregar y eliminar productos del carrito en dos paginas (index.jsp y carrito.jsp)
+					String volverACarrito = request.getParameter("volverACarrito"); //Si se ingreso desde carrito.jsp viene en true
+					if(volverACarrito !=null && volverACarrito.equals("true")) {
+						redireccion = "WEB-INF/carrito.jsp";
+					} else {
+						redireccion = "ConsultaProductosServlet"; //index.jsp
+					}
+					
+					int id = Integer.parseInt(request.getParameter("hiddenId"));
+					LinkedList<ProductoEnCompra> carritoProductos = (LinkedList<ProductoEnCompra>)sesion.getAttribute("carritoProductos");
+					
+					if(operacion.equals("agregar")) {
+						
+						try {
+							Producto producto = new Producto(id);
+							producto = logicController.getProductoById(producto);
+							
+							ProductoEnCompra productoEnCompra = new ProductoEnCompra(producto,1); //1 es la cantidad inicial por defecto
+							carritoProductos.add(productoEnCompra);
+							
+						} catch(SQLException ex) {
+							setearError("ConsultaProductosServlet","errorEnBD",request);
+						}
+						
+					} else if (operacion.equals("eliminar")) {
+						
+						ProductoEnCompra productoEnCompraAEliminar = null;
+						for(ProductoEnCompra p: carritoProductos) { 
+							if (p.getProducto().getId() == id) {
+								productoEnCompraAEliminar = p;
+								break;
+							}
+						}
+						carritoProductos.remove(productoEnCompraAEliminar);
+						
+					}
+				} else {
+					setearError("ConsultaProductosServlet","formularioIncompleto",request);
+				}
+			} else {
+				redireccion = "WEB-INF/panelAdmin.jsp";
+			}
+
+============================================================================================================================================================================================

@@ -1,0 +1,363 @@
+============================================================================================================================================================================================
+realizarCompra.jsp
+============================================================================================================================================================================================
+
+		<div class="main-contenido-principal">
+				
+			<form name="formDatosCompra" method="post" action="registrarCompraServlet" autocomplete="off">
+				<input type="hidden" name="hiddenImporteTotal" value="<%=importeTotal%>">
+				
+				<div class="form-container">
+					
+					<div class="data-container">
+						<label>Datos de envío</label>
+						<label>Provincia</label>				<input type="text" name="textProvincia"			value="<%=textProvincia%>" 		size="25" maxlength="30"  required>
+						<label>Localidad</label>				<input type="text" name="textLocalidad"			value="<%=textLocalidad%>" 		size="25" maxlength="30"  required>
+						<label>Dirección</label>		 		<input type="text" name="textDireccion"			value="<%=textDireccion%>" 		size="25" maxlength="30"  required>
+						<label>Piso (opcional)</label>		 	<input type="text" name="textPiso" 				value="<%=textPiso%>" 			size="25" maxlength="2">
+						<label>Departamento (opcional)</label>	<input type="text" name="textDepartamento"    	value="<%=textDepartamento%>" 	size="25" maxlength="2">
+						<label>Tel.-Código de área</label>		<input type="text" name="textCodigoAreaTelef" 	value="<%=textCodigoAreaTelef%>"size="25" maxlength="10"  required>
+						<label>Tel.-Número</label>				<input type="text" name="textNroTelef"			value="<%=textNroTelef%>" 		size="25" maxlength="10"  required>
+					</div>
+					
+					<div class="data-container">
+						<label>Datos de pago</label>
+						<label>DNI (Titular tarjeta)</label>				<input type="text" name="textDniTitularTarj" 	value="<%=textDniTitularTarj%>" size="25" maxlength="8"  required>
+						<label>Nombre y apellido (Titular tajeta)</label>	<input type="text" name="textNyATitularTarj" 	value="<%=textNyATitularTarj%>" size="25" maxlength="50" required>
+						<label>Número de tarjeta</label>	 				<input type="text" name="textNumeroTarj"     	value="<%=textNumeroTarj%>" 	size="25" minlength="16" maxlength="16" required>
+						<label>Entidad emisora</label>	 					<input type="text" name="textEntidadEmisora" 	value="<%=textEntidadEmisora%>" size="25" maxlength="50" required>
+						<label>Mes de vencimiento</label>					<input type="text" name="textMesVtoTarj"     	value="<%=textMesVtoTarj%>" 	size="25" maxlength="2"  required>
+						<label>Año de vencimiento</label>					<input type="text" name="textAnioVtoTarj"    	value="<%=textAnioVtoTarj%>" 	size="25" maxlength="4"  required>
+						<label>Código de seguridad</label> 					<input type="text" name="textCodigoSegTarj"  	value="<%=textCodigoSegTarj%>" 	size="25" maxlength="10" required>
+						
+						<div class="submit-container">
+							<input class="boton" type="submit"  value="Comprar"></input>
+						</div>
+					</div>
+					
+				</div>
+				
+			</form>
+			
+		</div>
+
+============================================================================================================================================================================================
+RegistrarCompraServlet
+============================================================================================================================================================================================
+
+    	if(esCliente(usuario)) {
+    		
+    		if(request.getParameter("textProvincia") != null) {
+    			
+    			double hiddenImporteTotal = Double.parseDouble(request.getParameter("hiddenImporteTotal")); //Viene como double desde la bd.
+    			
+    			String textProvincia		= request.getParameter("textProvincia");
+    			String textLocalidad		= request.getParameter("textLocalidad");
+    			String textDireccion		= request.getParameter("textDireccion");
+    			String textPiso				= request.getParameter("textPiso");
+    			String textDepartamento		= request.getParameter("textDepartamento");
+    			String textCodigoAreaTelef	= request.getParameter("textCodigoAreaTelef");
+    			String textNroTelef			= request.getParameter("textNroTelef");
+    			
+    			String textDniTitularTarj	= request.getParameter("textDniTitularTarj");
+    			String textNyATitularTarj	= request.getParameter("textNyATitularTarj");
+    			String textNumeroTarj		= request.getParameter("textNumeroTarj");
+    			String textEntidadEmisora	= request.getParameter("textEntidadEmisora");
+    			String textCodigoSegTarj	= request.getParameter("textCodigoSegTarj");
+    			
+    			try {
+        			int    textMesVtoTarj		= Integer.parseInt(request.getParameter("textMesVtoTarj"));
+    				int    textAnioVtoTarj		= Integer.parseInt(request.getParameter("textAnioVtoTarj"));
+    				
+    				if(textMesVtoTarj > 0 && textMesVtoTarj < 13) { //Controlo que ingrese un mes valido
+    					
+    					SimpleDateFormat sdfMes = new SimpleDateFormat("MM");
+    					SimpleDateFormat sdfAnio = new SimpleDateFormat("yyyy");
+    					Date fecha = new Date();
+    					int mesActual = Integer.parseInt(sdfMes.format(fecha));
+    					int anioActual = Integer.parseInt(sdfAnio.format(fecha));
+    					
+    					if(textAnioVtoTarj > anioActual-1 && textAnioVtoTarj < anioActual+10) { //Controlo que ingrese un anio dentro del rango valido
+    						
+    						if(fechaVencimientoEsMayorQueActual(textAnioVtoTarj,textMesVtoTarj,anioActual,mesActual)) {
+    							
+    							LinkedList<ProductoEnCompra> carritoProductos = (LinkedList<ProductoEnCompra>)sesion.getAttribute("carritoProductos");
+    							
+    							if(stocksSuficientes(request,carritoProductos)) {
+    								if(sistemaTarjetaValidaCompra(textCodigoSegTarj)) {
+    									
+    									Direccion direccion = new Direccion(textProvincia, textLocalidad, textDireccion, textPiso, textDepartamento, textCodigoAreaTelef, textNroTelef);
+    									direccion = logicController.create(direccion);
+    									
+    									//Intento traer tarjeta ingresada. Si no existe la doy de alta.
+    									Tarjeta tarjeta = new Tarjeta(textNumeroTarj);
+    									tarjeta = logicController.getTarjeta(tarjeta);
+    									if(tarjeta==null) {
+    										tarjeta = new Tarjeta(textNumeroTarj, textEntidadEmisora, textMesVtoTarj, textAnioVtoTarj, textDniTitularTarj, textNyATitularTarj);
+    										tarjeta = logicController.create(tarjeta);
+    									}
+    									
+    									Valuacion valuacion = new Valuacion("Pendiente");
+    									
+    									Compra compra = new Compra(usuario,direccion,tarjeta,valuacion,hiddenImporteTotal);
+    									compra = logicController.create(compra);
+    									
+    									logicController.create(carritoProductos,compra);
+    									logicController.updateStockProductos(carritoProductos);
+    									
+    									carritoProductos.clear();
+    									
+    									redireccion = "WEB-INF/detalleCompra.jsp";
+    									
+    								} else {
+    									setError(request,"tarjetaRechazaCompra");
+    								}
+    							}
+    						} else {
+    							setError(request,"mesDebeSerMayorAlActual");
+    						}
+    					} else {
+    	    				setError(request,"anioIncorrecto");
+    	    				request.setAttribute("anioActual",anioActual);
+    					}
+    				} else {
+    					setError(request,"mesIncorrecto");
+    				}
+    			} catch(NumberFormatException ex) {
+    				setError(request,"NumberFormatExceptionMesAnio");
+    				
+    			} catch(SQLException ex) {
+    				setError(request,"errorEnDB");
+    				
+    			}
+    		} else {
+    			redireccion = "WEB-INF/realizarCompra.jsp";
+    		}
+        }
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	/** Devuelve true si la fecha de vencimiento es mayor que la actual y false en caso contrario. */
+	private boolean fechaVencimientoEsMayorQueActual(int textAnioVtoTarj, int textMesVtoTarj, int anioActual, int mesActual) {
+		boolean bandera = true;
+		if(textAnioVtoTarj == anioActual) {
+			if(textMesVtoTarj <= mesActual) {
+				bandera = false;
+			}
+		}
+		return bandera;
+	}
+	
+	/** Antes de dar de alta la compra revisa en la bd si hay stock suficiente de cada producto. */
+	private boolean stocksSuficientes(HttpServletRequest request, LinkedList<ProductoEnCompra> carritoProductos) throws SQLException {
+		
+		boolean stocksSuficientes = true;
+		for(ProductoEnCompra pec: carritoProductos) {
+			
+			Producto p = logicController.getProductoById(pec.getProducto());
+			
+			if(pec.getCantidad() > p.getStock()) {
+				request.setAttribute("error","stockModificadoMientrasClienteRealizabaLaCompra");
+				request.setAttribute("productoErrorStock", p);
+				pec.setCantidad(1); //Si no hay stock suficiente de un producto le seteo la cantidad por defecto en 1 nuevamente para que vuelva a elegir cantidad.
+				redireccion = "WEB-INF/carrito.jsp";
+				stocksSuficientes = false;
+				break;
+			}
+		}
+		return stocksSuficientes;
+	}
+
+============================================================================================================================================================================================
+LogicController
+============================================================================================================================================================================================
+
+public class LogicController {
+	
+	public LogicController() {}
+	
+	/** REALIZAR COMPRA */
+	
+	public Direccion create(Direccion direccion) throws SQLException {
+		DataRegistrarCompra drc  = new DataRegistrarCompra();
+		return drc.createDireccion(direccion);
+	}
+	
+	public Tarjeta getTarjeta(Tarjeta tarjeta) throws SQLException {
+		DataTarjeta dt = new DataTarjeta();
+		return dt.getTarjeta(tarjeta);
+	}
+	
+	public Tarjeta create(Tarjeta tarjeta) throws SQLException {
+		DataRegistrarCompra drc  = new DataRegistrarCompra();
+		return drc.createTarjeta(tarjeta);
+	}
+	
+	public Compra create(Compra compra) throws  SQLException {
+		DataRegistrarCompra drc  = new DataRegistrarCompra();
+		return drc.createCompra(compra);
+	}
+	
+	public void create(LinkedList<ProductoEnCompra> carritoProductos, Compra compra) throws SQLException {
+		DataRegistrarCompra drc  = new DataRegistrarCompra();
+		drc.createProductosEnCompra(carritoProductos, compra);
+	}
+	
+	public void updateStockProductos(LinkedList<ProductoEnCompra> carritoProductos) throws SQLException {
+		DataRegistrarCompra drc  = new DataRegistrarCompra();
+		drc.updateStockProductos(carritoProductos);
+	}
+
+}
+
+============================================================================================================================================================================================
+DataRegistrarCompra
+============================================================================================================================================================================================
+
+public class DataRegistrarCompra {
+	
+	public Direccion createDireccion(Direccion direccion) throws SQLException {
+		
+		PreparedStatement stmt = null;
+		ResultSet keyResultSet = null;
+		
+		stmt = DbConnector.getInstancia().getConn().prepareStatement("INSERT INTO direccion(provincia,localidad,direccion,piso,departamento,codigoAreaTelef,nroTelef) VALUES(?,?,?,?,?,?,?)",PreparedStatement.RETURN_GENERATED_KEYS);
+		stmt.setString(1, direccion.getProvincia());
+		stmt.setString(2, direccion.getLocalidad());
+		stmt.setString(3, direccion.getDireccion());
+		stmt.setString(4, direccion.getPiso());
+		stmt.setString(5, direccion.getDepartamento());
+		stmt.setString(6, direccion.getCodigoAreaTelef());
+		stmt.setString(7, direccion.getNroTelef());
+		
+		stmt.executeUpdate();
+		
+		keyResultSet = stmt.getGeneratedKeys();
+		if(keyResultSet!=null && keyResultSet.next()){
+    		direccion.setId(keyResultSet.getInt(1));
+		}
+		
+		if(keyResultSet!=null) {keyResultSet.close();}
+		if(stmt!=null) {stmt.close();}
+		DbConnector.getInstancia().releaseConn();
+			
+		return direccion;
+	}
+	
+	public Tarjeta createTarjeta(Tarjeta tarjeta) throws SQLException {
+		
+		PreparedStatement stmt = null;
+		
+		stmt = DbConnector.getInstancia().getConn().prepareStatement("INSERT INTO tarjeta(numero,entidadEmisora,mesVencimiento,anioVencimiento,dniTitular,nyaTitular) VALUES(?,?,?,?,?,?)");
+		stmt.setString(1, tarjeta.getNumero());
+		stmt.setString(2, tarjeta.getEntidadEmisora());
+		stmt.setInt   (3, tarjeta.getMesVencimiento());
+		stmt.setInt   (4, tarjeta.getAnioVencimiento());
+		stmt.setString(5, tarjeta.getDniTitular());
+		stmt.setString(6, tarjeta.getNyaTitular());
+		
+		stmt.executeUpdate();
+		
+		if(stmt!=null) {stmt.close();}
+		DbConnector.getInstancia().releaseConn();
+		
+		return tarjeta;
+	}
+	
+	public Compra createCompra(Compra compra) throws  SQLException {
+		
+		PreparedStatement stmt = null;
+		ResultSet keyResultSet = null;
+		
+		java.util.Date fechaHoraActual	= new java.util.Date();
+		java.sql.Date  fechaActual		= new java.sql.Date(fechaHoraActual.getTime());
+		java.sql.Time  horaActual		= new java.sql.Time(fechaHoraActual.getTime());
+		
+		stmt = DbConnector.getInstancia().getConn().prepareStatement("INSERT INTO compra(idUsuario,idDireccion,nroTarjeta,fecha,hora,importe,estadoValuacion) VALUES(?,?,?,?,?,?,?)",PreparedStatement.RETURN_GENERATED_KEYS);
+		stmt.setInt   (1, compra.getUsuario().getId());
+		stmt.setInt   (2, compra.getDireccion().getId());
+		stmt.setString(3, compra.getTarjeta().getNumero());
+		stmt.setDate  (4, fechaActual);
+		stmt.setTime  (5, horaActual);
+		stmt.setDouble(6, compra.getImporte());
+		stmt.setString(7, compra.getValuacion().getEstado());
+		
+		stmt.executeUpdate();
+		
+		keyResultSet = stmt.getGeneratedKeys();
+		if(keyResultSet!=null && keyResultSet.next()) {
+    		compra.setId(keyResultSet.getInt(1));
+		}
+		
+		if(keyResultSet!=null) {keyResultSet.close();}
+		if(stmt!=null) {stmt.close();}
+		DbConnector.getInstancia().releaseConn();
+		
+		return compra;
+	}
+	
+	public void createProductosEnCompra(LinkedList<ProductoEnCompra> carritoProductos, Compra compra) throws SQLException {
+		
+		PreparedStatement stmt = null;
+		
+		for(ProductoEnCompra pec : carritoProductos) {
+			
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("INSERT INTO producto_en_compra(idProducto,idCompra,precio,cantidad) VALUES(?,?,?,?)");
+			stmt.setInt   (1, pec.getProducto().getId());
+			stmt.setInt   (2, compra.getId());
+			stmt.setDouble(3, pec.getProducto().getPrecio());
+			stmt.setInt   (4, pec.getCantidad());
+			
+			stmt.executeUpdate();
+		}
+		
+		if(stmt!=null) {stmt.close();}
+		DbConnector.getInstancia().releaseConn();
+		
+	}
+	
+	public void updateStockProductos(LinkedList<ProductoEnCompra> carritoProductos) throws SQLException {
+		
+		PreparedStatement stmt = null;
+		
+		for(ProductoEnCompra pec : carritoProductos) {
+			int nuevoStock = pec.getProducto().getStock() - pec.getCantidad();
+			
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("UPDATE producto SET stock=? WHERE id=?");
+			stmt.setInt(1, nuevoStock);
+			stmt.setInt(2, pec.getProducto().getId());
+			
+			stmt.executeUpdate();
+		}
+		
+		if(stmt!=null) {stmt.close();}
+		DbConnector.getInstancia().releaseConn();
+		
+	}
+	
+}
+
+============================================================================================================================================================================================
+detalleCompra.jsp
+============================================================================================================================================================================================
+
+	<div class="main">
+		
+		<div class="main-titulo-pagina">
+			<h2 align="center">Detalle compra</h2>
+		</div>
+		
+		<div class="main-contenido-principal">
+			
+			<div class="mensaje-uno">
+				<p>FELICITACIONES! La compra se ha realizado con éxito.</p>
+			</div>
+			<div class="mensaje-dos">
+				<p>Los productos estarán llegando al domicilio indicado en la compra en las próximas 72 hs.</p>
+			</div>
+			
+		</div>
+		
+	</div>
+
+============================================================================================================================================================================================

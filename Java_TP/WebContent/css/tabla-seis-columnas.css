@@ -1,0 +1,84 @@
+@charset "ISO-8859-1";
+
+/* agregarProducto.jsp*/
+
+.main-contenido-principal{
+	width: 100%;
+	padding-top: 50px;
+	text-align: center;
+}
+
+.boton-agregar{
+	display: block;
+	width: 70%;
+	margin: auto;
+	text-align: center;
+}
+
+.table{
+	display: inline-block;
+	width: 90%;
+	margin: auto;
+	margin-top:30px;
+	text-align: left;
+}
+
+.tr{
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	border-top: 	2px solid #50e33d;
+	border-left: 	2px solid #50e33d;
+	border-right: 	2px solid #50e33d;
+}
+.tr:first-child{
+	font-weight: bold;
+	font-size: 1.3em;
+}
+.tr:last-child{
+	border-bottom: 	2px solid #50e33d;
+}
+
+.td{
+	padding: 10px;
+	text-align: center;
+	color: white;
+}
+
+.width-s{
+	width: 8%;
+}
+
+.width-m{
+	width: 13%;
+}
+
+.width-l{
+	width: 24%;
+}
+
+.width-xl{
+	width: 24%;
+	diplay: flex;
+	justify-content: space-around;
+}
+
+.dar-de-baja-color{
+	background-color: red;
+}
+
+.dar-de-alta-color{
+	background-color: #50e33d;
+}
+
+.no-hay-stock-color{
+	color: red;
+}
+.pocas-unidades-color{
+	color: yellow;
+}
+.hay-stock-color{
+	color: #03fc49;
+}
+

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  
+  <display-name>Java_TP</display-name>
+  
+  <welcome-file-list>
+	<welcome-file>ConsultaProductosServlet</welcome-file>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <servlet>  
+    <description></description>
+    <display-name>AltaUsuarioServlet</display-name>
+    <servlet-name>AltaUsuarioServlet</servlet-name>
+    <servlet-class>servlets.AltaUsuarioServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AltaUsuarioServlet</servlet-name>
+    <url-pattern>/altaUsuarioServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>  
+    <description></description>
+    <display-name>IniciarSesionServlet</display-name>
+    <servlet-name>IniciarSesionServlet</servlet-name>
+    <servlet-class>servlets.IniciarSesionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>IniciarSesionServlet</servlet-name>
+    <url-pattern>/iniciarSesionServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>  
+    <description></description>
+    <display-name>CerrarSesionServlet</display-name>
+    <servlet-name>CerrarSesionServlet</servlet-name>
+    <servlet-class>servlets.CerrarSesionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CerrarSesionServlet</servlet-name>
+    <url-pattern>/cerrarSesionServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>  
+    <description></description>
+    <display-name>AbmcCategoriaServlet</display-name>
+    <servlet-name>AbmcCategoriaServlet</servlet-name>
+    <servlet-class>servlets.AbmcCategoriaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AbmcCategoriaServlet</servlet-name>
+    <url-pattern>/abmcCategoriaServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>  
+    <description></description>
+    <display-name>AbmcProductoServlet</display-name>
+    <servlet-name>AbmcProductoServlet</servlet-name>
+    <servlet-class>servlets.AbmcProductoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AbmcProductoServlet</servlet-name>
+    <url-pattern>/abmcProductoServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>  
+    <description></description>
+    <display-name>AgregarProductoServlet</display-name>
+    <servlet-name>AgregarProductoServlet</servlet-name>
+    <servlet-class>servlets.AgregarProductoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AgregarProductoServlet</servlet-name>
+    <url-pattern>/agregarProductoServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>  
+    <description></description>
+    <display-name>EditarProductoServlet</display-name>
+    <servlet-name>EditarProductoServlet</servlet-name>
+    <servlet-class>servlets.EditarProductoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>EditarProductoServlet</servlet-name>
+    <url-pattern>/editarProductoServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>  
+    <description></description>
+    <display-name>ConsultaProductosServlet</display-name>
+    <servlet-name>ConsultaProductosServlet</servlet-name>
+    <servlet-class>servlets.ConsultaProductosServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ConsultaProductosServlet</servlet-name>
+    <url-pattern>/consultaProductosServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>  
+    <description></description>
+    <display-name>CarritoServlet</display-name>
+    <servlet-name>CarritoServlet</servlet-name>
+    <servlet-class>servlets.CarritoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CarritoServlet</servlet-name>
+    <url-pattern>/carritoServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>CantidadServlet</display-name>
+    <servlet-name>CantidadServlet</servlet-name>
+    <servlet-class>servlets.CantidadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CantidadServlet</servlet-name>
+    <url-pattern>/cantidadServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>RegistrarCompraServlet</display-name>
+    <servlet-name>RegistrarCompraServlet</servlet-name>
+    <servlet-class>servlets.RegistrarCompraServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>RegistrarCompraServlet</servlet-name>
+    <url-pattern>/registrarCompraServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>ConsultaComprasServlet</display-name>
+    <servlet-name>ConsultaComprasServlet</servlet-name>
+    <servlet-class>servlets.ConsultaComprasServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ConsultaComprasServlet</servlet-name>
+    <url-pattern>/consultaComprasServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>ValuarServlet</display-name>
+    <servlet-name>ValuarServlet</servlet-name>
+    <servlet-class>servlets.ValuarServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ValuarServlet</servlet-name>
+    <url-pattern>/valuarServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>ConsultaVentasServlet</display-name>
+    <servlet-name>ConsultaVentasServlet</servlet-name>
+    <servlet-class>servlets.ConsultaVentasServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ConsultaVentasServlet</servlet-name>
+    <url-pattern>/consultaVentasServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>ConsultaUsuariosServlet</display-name>
+    <servlet-name>ConsultaUsuariosServlet</servlet-name>
+    <servlet-class>servlets.ConsultaUsuariosServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ConsultaUsuariosServlet</servlet-name>
+    <url-pattern>/consultaUsuariosServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>RedireccionServlet</display-name>
+    <servlet-name>RedireccionServlet</servlet-name>
+    <servlet-class>servlets.RedireccionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>RedireccionServlet</servlet-name>
+    <url-pattern>/redireccionServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>SubirImagenAlServidorServlet</display-name>
+    <servlet-name>SubirImagenAlServidorServlet</servlet-name>
+    <servlet-class>servlets.SubirImagenAlServidorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SubirImagenAlServidorServlet</servlet-name>
+    <url-pattern>/subirImagenAlServidorServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>ConsultaImagenesServlet</display-name>
+    <servlet-name>ConsultaImagenesServlet</servlet-name>
+    <servlet-class>servlets.ConsultaImagenesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ConsultaImagenesServlet</servlet-name>
+    <url-pattern>/consultaImagenesServlet</url-pattern>
+  </servlet-mapping>  
+  
+</web-app>

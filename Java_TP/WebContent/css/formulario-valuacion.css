@@ -1,0 +1,53 @@
+@charset "ISO-8859-1";
+
+/* realizarValuacion.jsp */
+
+.main-contenido-principal{
+	width: 100%;
+	padding-top: 50px;
+	text-align: center;
+}
+
+.formulario{
+	width: 30%;
+	margin: auto;
+}
+
+.puntaje{
+	text-align: left;
+}
+
+.comentario{
+	text-align: left;
+	margin: 40px 0;
+}
+
+.label-titulo{
+	display: block;
+	margin: 20px 0;
+	border-bottom: 2px solid #50e33d;
+}
+
+.label-radio{
+	display: inline-block;
+	width: 12%;
+	margin-left: 7px;
+}
+
+textarea{
+	width: 100%;
+	height: 150px;
+	padding: 12px 20px;
+	border: 2px solid #ccc;
+	border-radius: 4px;
+	background-color: #f8f8f8;
+	resize: none;
+}
+
+.formulario-submit{
+	text-align: center;
+}
+
+input[type=submit]{
+	padding: 5px 30px;
+}

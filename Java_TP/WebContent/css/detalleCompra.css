@@ -1,0 +1,12 @@
+@charset "ISO-8859-1";
+
+/* detalleCompra.jsp */
+
+.main-contenido-principal{
+	width: 100%;
+	padding-top: 50px;
+	text-align: center;
+}
+.mensaje-uno, .mensaje-dos{
+	margin-top: 30px;
+}

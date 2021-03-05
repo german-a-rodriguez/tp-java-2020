@@ -1,0 +1,130 @@
+@charset "ISO-8859-1";
+
+/* carrito.jsp */
+
+/*--------------------------*/
+/*Tabla carrito*/
+
+.main-contenido-principal{
+	width: 100%;
+	padding-top: 50px;
+}
+
+.table{
+	width: 100%;
+}
+
+.thead{
+	width: 100%;
+}
+
+.tbody{
+	width: 100%;
+}
+
+.tfoot{
+	width: 100%;
+	height: 50px;
+	padding-top: 22px;
+	text-align: center;
+}
+
+.tr{
+	display: flex;
+}
+
+.th{
+	height: 40px;
+	padding-top: 8px;
+	outline: 1px solid #50e33d;
+	text-align: center;
+}
+
+.td{
+	height: 100px;
+	padding-top: 37px;
+	outline: 1px solid #50e33d;
+	text-align: center;
+}
+
+.th-foto, .td-foto{
+	width: 8%;
+}
+.th-desc, .td-desc{
+	width: 25%;
+}
+.th-cate, .td-cate{
+	width: 11%;
+}
+.th-stoc, .td-stoc{
+	width: 11%;
+}
+.th-cant, .td-cant{
+	width: 11%;
+}
+.th-prec, .td-prec{
+	width: 11%;
+}
+.th-subt, .td-subt{
+	width: 11%;
+}
+.th-elim, .td-elim{
+	width: 12%;
+	outline: none;
+}
+
+/*--------------------------*/
+/* Retoques de la tabla carrito */
+
+.td-foto{
+	padding: 0;
+}
+.td-foto img{
+	width: 100%;
+	height: 100%;
+}
+.td-cant, .td-elim{
+	padding-top: 32px;
+}
+.td-elim form{
+	margin-left: -5px;
+}
+.td-elim input[type=submit]{
+	background-color: #f71111;
+}
+
+/*--------------------------*/
+/* Celda cantidad */
+
+.table-cantidad-tr{
+	margin-left: 8px;
+	display: flex;
+}
+.table-cantidad-td{
+	width: 40px;
+}
+.boton-menos{
+	padding-left: 15px;
+	padding-right: 15px;
+	font-size: 1em;
+	font-weight: bold;
+}
+.boton-mas{
+	padding-left: 13px;
+	padding-right: 13px;
+	font-size: 1em;
+	font-weight: bold;
+}
+.centrar-numero{
+	padding-top: 6px;
+	padding-left: 12px;
+}
+
+/*--------------------------*/
+/* Boton iniciar compra */
+
+.table-boton{
+	padding: 20px;
+	text-align: center;
+}
+

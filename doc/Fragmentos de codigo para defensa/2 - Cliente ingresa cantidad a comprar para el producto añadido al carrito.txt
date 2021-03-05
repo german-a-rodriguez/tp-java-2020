@@ -1,0 +1,143 @@
+============================================================================================================================================================================================
+carrito.jsp
+============================================================================================================================================================================================
+
+<div class="main-contenido-principal">
+		<%if(carritoProductos!=null) {%>
+			<%if(carritoProductos.size() > 0) {%>
+					
+				<div class="table">
+					
+					<div class="thead">
+						<div class="tr">
+							<div class="th th-foto"><p>Foto</p></div>
+							<div class="th th-desc"><p>Descripción</p></div>
+							<div class="th th-cate"><p>Categoria</p></div>
+							<div class="th th-stoc"><p>Stock</p></div>
+							<div class="th th-cant"><p>Cantidad</p></div>
+							<div class="th th-prec"><p>Precio</p></div>
+							<div class="th th-subt"><p>Total</p></div>
+							<div class="th th-elim"></div>
+						</div>
+					</div>
+					
+					<div class="tbody">
+						<%
+						double importeTotal = 0; 
+						for(ProductoEnCompra pec: carritoProductos) {
+							double importeUnitario =  pec.getProducto().getPrecio();
+							double importeSubtotal =  pec.getProducto().getPrecio() * pec.getCantidad();
+							importeTotal = importeTotal + importeSubtotal;
+							%>
+							
+							<div class="tr">
+								<div class="td td-foto"><img src="<%="images/productos/"+pec.getProducto().getLinkFoto()%>" alt="" width="100" height="100"></div>
+								<div class="td td-desc"><p><%=pec.getProducto().getDescripcion()%></p></div>
+								<div class="td td-cate"><p><%=pec.getProducto().getCategoria().getNombre()%></p></div>
+								<div class="td td-stoc"><p><%=pec.getProducto().getStock()%> unidades</p></div>
+								
+								<div class="td td-cant">
+									<div class="table-cantidad-tr">
+											<div class="table-cantidad-td">
+												<form name="formCantidadMenosUno" method="get" action="cantidadServlet">
+													<input type="hidden" name="hiddenOperacion" value="cantidadMenosUno">
+													<input type="hidden" name="hiddenId" 		value="<%=pec.getProducto().getId()%>">
+													<input class="boton boton-menos" type="submit" value="-">
+												</form>
+											</div>
+											<div class="table-cantidad-td centrar-numero">
+												<p><%=pec.getCantidad()%></p>
+											</div>
+											<div class="table-cantidad-td">
+ 												<form name="formCantidadMasUno" method="get" action="cantidadServlet">
+													<input type="hidden" name="hiddenOperacion" value="cantidadMasUno">
+													<input type="hidden" name="hiddenId" 		value="<%=pec.getProducto().getId()%>">
+													<input class="boton boton-mas" type="submit" value="+">
+												</form>
+											</div>
+									</div>
+								</div>
+								
+								<div class="td td-prec"><p>$ <%=String.format("%.2f", importeUnitario)%> ARS</p></div>
+								<div class="td td-subt"><p>$ <%=String.format("%.2f", importeSubtotal)%> ARS</p></div>
+								
+								<div class="td td-elim">
+									<form name="formEliminarProductoCarrito" method="get" action="carritoServlet">
+										<input type="hidden" name="volverACarrito" 	value="true">
+										<input type="hidden" name="hiddenOperacion" value="eliminar">
+										<input type="hidden" name="hiddenId" 		value="<%=pec.getProducto().getId()%>">
+										<input class="boton boton-eliminar-color" type="submit" size="25" value="Eliminar del carrito">
+									</form>
+								</div>
+								
+							</div>
+						<%}%>	
+					</div>
+					
+					<div class="tfoot">
+						<p>Total de la compra: $ <%=String.format("%.2f", importeTotal)%> ARS<p>
+	 				</div>
+					
+				</div>
+				
+				<div class="table-boton">
+					<form name="formIniciarCompra" method="post" action="redireccionServlet?destino=realizarCompra.jsp">
+						<input type="hidden" name="hiddenImporteTotal" value="<%=importeTotal%>">
+						<input class="boton" type="submit" value="Iniciar compra">
+					</form>
+				</div>
+				
+			<%} else {%>
+				
+				<div class="main-error">
+					<div class="main-error-texto">
+						<p>No hay productos en el carrito. Agregue algún producto y vuelva!</p>
+					</div>
+				</div>
+				
+			<%}%>
+		<%}%>
+		</div>
+
+============================================================================================================================================================================================
+CantidadServlet
+============================================================================================================================================================================================
+
+    	if(esCliente(usuario)) {
+    		
+    		String operacion = request.getParameter("hiddenOperacion");
+    		if(operacion!=null) {
+    			
+    			int id = Integer.parseInt(request.getParameter("hiddenId"));
+        		LinkedList<ProductoEnCompra> carritoProductos = (LinkedList<ProductoEnCompra>)sesion.getAttribute("carritoProductos");
+    			
+    			for(ProductoEnCompra pec : carritoProductos) {
+    				if(pec.getProducto().getId() == id) {
+    					
+    					int cantidadActual = pec.getCantidad();
+    					
+    					if(operacion.equals("cantidadMenosUno")) {
+    	    				
+    						if(1 < cantidadActual) {
+    							cantidadActual--;
+    							pec.setCantidad(cantidadActual);
+    	    				}
+    						
+    					} else if(operacion.equals("cantidadMasUno")) {
+    	    				
+    	    				if(cantidadActual < pec.getProducto().getStock()) {
+    	    					cantidadActual++;
+    	    					pec.setCantidad(cantidadActual);
+    	    				} else {
+    	    					request.setAttribute("error","stockMaximoAlcanzado");
+    	    				}
+    	    			}
+    					
+        				break;
+    				}
+    			}
+    		}
+    		redireccion = "WEB-INF/carrito.jsp";
+    	}
+
+============================================================================================================================================================================================

@@ -1,0 +1,118 @@
+@charset "ISO-8859-1";
+
+/* subirImagenesAlServidor.jsp*/
+
+.main-contenido-principal{
+	width: 100%;
+	padding-top: 50px;
+	text-align: center;
+}
+
+.div-form{
+	display: inline-block;
+	width: 30%;
+	padding: 10px;
+	border: 2px solid #50e33d;
+	border-radius: 3px;
+	color: white;
+}
+
+.form-title{
+	font-size: 1.5rem;
+	margin-bottom: 30px;
+}
+
+.contenedor-seleccionar{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.contenedor-botones{
+	margin-top: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.div-volver{
+	margin-top: 50px;
+	margin-right: 80px;
+	text-align: right;
+}
+
+/** --- BOTONES PARA SELECCIONAR ARCHIVOS --- */
+
+.contenedor-file-input{
+	display: inline-block;
+	width: 50%;
+	padding: 8px;
+	background-color: #2499e3;
+	border-radius: 5px;
+	box-shadow: 0px 3px 0px #1a71a9;
+	text-align: center;
+	position: relative;
+}
+.contenedor-file-input:hover{
+	background-color: #24afff;
+}
+.contenedor-file-input p{
+	text-align: center;
+}
+.contenedor-file-input input[type=file]{
+	position: absolute;
+	/* Para que el input tome el tamaño del contenedor */
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	width: 100%;
+	height: 100%;
+	/* Para que no se vea el boton por defecto del input */
+	opacity: 0;
+}
+
+/** --- IMAGENES --- */
+
+.imagenes-container{
+	padding-top: 40px;
+}
+
+.una-imagen{
+	display: inline-block;
+	width: 335px;
+	height: 180px;
+	text-align: center;
+
+}
+
+.una-imagen-foto{
+	display: inline-block;
+	width: 100%;
+	height: 70%;
+}
+
+.una-imagen-nombre{
+	display: inline-block;
+	width: 100%;
+	height: 30%;
+}
+
+.checkbox{
+	margin-right: 5px;
+}
+
+.btn-borrar-img-serv-container{
+	text-align: center;	
+}
+
+.btn-borrar-img-serv{
+	display: inline-block;
+	width: 30%;
+	margin-bottom: 60px;
+	padding: 10px;
+	text-align: center;
+	border: 2px solid #50e33d;
+	border-radius: 3px;
+}
+

@@ -1,0 +1,78 @@
+@charset "ISO-8859-1";
+
+/* realizarCompra.jsp */
+
+/* --- --- --- Contenedores --- --- --- */
+
+.main-contenido-principal{
+	width: 100%;
+}
+
+.form-container{
+	width: 80%;
+	margin: auto;
+	
+	display: flex;
+    justify-content: space-around;
+}
+
+.data-container{
+	display: inline-block;
+	
+	width: 40%;
+	margin-top: 50px;
+}
+
+.submit-container{
+	padding-top: 50px;
+	text-align: center;
+}
+
+/* --- --- --- Formulario --- --- --- */
+
+/* Labels */
+
+label{
+	display: block;
+	margin-top: 25px;
+}
+
+.data-container label:first-child{
+	display: block;
+	font-size: 2em;
+	border-bottom: 2px solid #50e33d;
+}
+
+.data-container label:nth-child(2){
+	margin-top: 70px;
+}
+
+/* Inputs */
+
+input[type=text]{
+	display: block;
+	width: 100%;
+	padding: 10px 20px;
+	background-color: #2a2e2b;
+	color: white;
+	font-size: 1.1em;
+/*	border-radius: 5px; 				/*1*/
+	border: 0;							/*2*/
+	border-bottom: 2px solid white;		/*2*/
+}
+
+input[type=text]:hover{
+/*	border: 2px solid #50e33d;			/*1*/
+ 	border-bottom: 2px solid #50e33d;	/*2*/
+}
+
+input[type=text]:focus{
+	outline: none;
+/*	border: 2px solid #50e33d;			/*1*/
+	border-bottom: 2px solid #50e33d;	/*2*/
+}
+
+input[type=submit]{
+	padding: 5px 30px;
+	font-size: 1.1em;
+}

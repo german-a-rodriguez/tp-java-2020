@@ -1,0 +1,49 @@
+@charset "ISO-8859-1";
+
+/* agregarCategoria.jsp, listaUsuariosAdmin.jsp*/
+
+.main-contenido-principal{
+	width: 100%;
+	padding-top: 50px;
+	text-align: center;
+}
+
+.boton-agregar{ /*Para agregarCategoria.jsp*/
+	display: block;
+	width: 70%;
+	margin: auto;
+	text-align: center;
+}
+
+.table{
+	display: inline-block;
+	width: 70%;
+	margin: auto;
+	margin-top: 30px;
+	text-align: left;
+}
+
+.tr{
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	border-top: 2px solid #50e33d;
+	border-left: 2px solid #50e33d;
+	border-right: 2px solid #50e33d;
+}
+.tr:first-child{
+	font-weight: bold;
+	font-size: 1.3em;
+}
+.tr:last-child{
+	border-bottom: 2px solid #50e33d;
+}
+
+.td{
+	width: 25%;
+	padding: 10px;
+	text-align: center;
+	color: white;
+}
+

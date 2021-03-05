@@ -1,0 +1,65 @@
+@charset "ISO-8859-1";
+
+/* iniciarSesion.jsp, registrarUsuario.jsp, agregarCategoria.jsp, editarCategoria.jsp, agregarProducto.jsp, editarProducto.jsp */
+
+.main-contenido-principal{
+	width: 100%;
+	padding-top: 50px;
+	text-align: center;
+}
+
+.formulario{
+	display: inline-block;
+	width: 30%;
+	margin: auto;
+	text-align: left;
+}
+
+label{
+	display: block;
+	margin-top: 25px;
+}
+
+input[type=text], input[type=password], input[type=email]{
+	display: block;
+	width: 90%;							/*Para la transition*/
+	padding: 10px 20px;
+	background-color: #2a2e2b;
+	color: white;
+	font-size: 1.1em;
+	border: 0;
+	border-bottom: 2px solid white;
+	transition: width 0.4s ease-in-out;	/*Para la transition*/
+}
+input[type=text]:hover, input[type=password]:hover, input[type=email]:hover{
+ 	border-bottom: 2px solid #50e33d;
+}
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus{
+	outline: none;
+	border-bottom: 2px solid #50e33d;
+	width: 100%;						/*Para la transition*/
+}
+
+.formulario-submit{
+	text-align: center;
+}
+input[type=submit]{
+	margin-top: 40px;
+	padding: 5px 20px;
+	font-size: 1.1em;
+}
+
+/* --- --- --- BOTON SHOW/HIDE PASSWORD --- --- --- */
+
+#btn-show-hide-container{
+	position: relative;
+}
+
+#btn-show-hide{
+	width: 40px;
+	height: 40px;
+	
+	position: absolute;
+	left: 420px;
+	bottom: 0;
+}

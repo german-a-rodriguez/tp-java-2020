@@ -1,0 +1,182 @@
+@charset "ISO-8859-1";
+
+/* Todas las paginas usan este archivo css */
+/* Este archivo sirve para darle estilo a todo menos a lo que esta en la parte MAIN de cada pagina */
+/* En los demas archivos css le doy estilo a la parte MAIN de cada pagina */
+
+
+
+
+/* --- --- --- GENERAL --- --- --- */
+
+*{
+	font-family: 'Roboto', sans-serif;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	width: 100%;
+	background: #2a2e2b; 	/* color negro */
+	min-height: 754px;		/* footer fijo */
+  	position: relative;		/* footer fijo */
+}
+
+p, h1, h2, h3, label{
+	color: white;
+}
+
+ul{
+	list-style: none;
+}
+
+.color-pagina{ 				/* lo tienen el nav y el footer */
+	background: #50e33d; 	/* verde */
+/* 	background: #76e665; 	/* verde claro*/
+}
+
+a:focus, input[type=submit], input[type=email]:focus{	
+	outline: none;			/* le saco el outline por defecto del navegador para cuando hago click */
+}
+
+
+
+
+/* --- --- --- HEADER --- --- --- */
+
+.header{
+	width: 90%;
+	height: 70px;
+	margin: auto;
+	padding: 20px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.header-right{
+	margin-top: 13px;
+}
+
+
+
+
+/* --- --- --- NAVIGATION --- --- --- */
+
+.nav{
+	width: 90%;
+	height: 60px;
+	margin: auto;
+	padding: 20px;
+	border-radius: 1em;
+	display: flex;
+	justify-content: space-between;
+	/* background-color en clase color-pagina */
+}
+
+.nav ul{
+	display: flex;
+}
+
+/* BOTONES DEL NAV */
+
+.nav-a{
+	margin: 0px 8px;
+	padding: 8px;
+	background-color: #50e33d;
+ 	color: #2a2e2b;
+	font-size: 18px;
+	text-decoration: none;
+ 	border-radius: 1em;
+}
+.nav-a:link,
+.nav-a:visited{
+ 	border-top: 	1px solid #888f82;
+	border-bottom: 	1px solid #888f82;
+	border-left: 	1px solid #888f82;
+	border-right: 	1px solid #888f82;
+}
+.nav-a:hover{
+	border-top: 	2px solid #666666;
+	border-bottom: 	1px solid #888f82;
+	border-left: 	2px solid #666666;
+	border-right: 	1px solid #888f82;
+}
+
+/* TEXTO DE CANTIDAD DE VALUACIONES PENDIENTES */
+
+.span{
+	color: #eb4034;
+}
+
+
+
+
+/* --- --- --- MAIN --- --- --- */
+
+.boton{
+	/* Boton de la pagina */
+	margin-left:10px;
+	padding: 5px;
+	background-color: #50e33d;
+	color: white;
+	font-size: 15px;
+	text-decoration: none;
+	border-radius: 1em;
+}
+.boton:hover{
+	/* Boton de la pagina */
+	border-top: 	2px solid white;
+	border-bottom: 	1px solid #cccccc;
+	border-left: 	2px solid white;
+	border-right: 	1px solid #cccccc;
+}
+
+.main{
+	width: 90%;
+	margin: auto;
+	margin-top: 30px;
+}
+
+.main-titulo-pagina{
+	width: 40%;
+	height: 50px;
+	padding: 10px;
+	margin: auto;
+	text-align: center;
+}
+
+.main-error{
+	height: 70px;
+	padding: 20px;
+	text-align: center;
+}
+
+.main-error-texto{
+	height: 30px;
+	padding: 5px;
+	background: #f78863;
+	border-radius: 10px;
+}
+
+
+
+
+/* --- --- --- FOOTER --- --- --- */
+
+.footer-espacio{
+	width: 100%;
+	height: 180px;
+}
+
+.footer{
+	width: 100%;
+	height: 70px;
+	margin-top: 400px important!;
+	padding-top: 16px;
+	text-align: center;
+	font-size: 30px;
+ 	position: absolute;		/* footer fijo */
+  	bottom: 0;				/* footer fijo */
+	/*background-color en clase color-pagina*/
+}
